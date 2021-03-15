@@ -14,10 +14,17 @@
       margin-top: 100px;
     }
 
+    .button{
+      text-align: center;
+    }
+
     </style>
   </head>
   <body>
     <h1 id="title">CAMPO MINATO</h1>
+    <div class="button">
+      <button id="button">clicca per far partire il gioco</button>
+    </div>
 
 
     <script type="text/javascript">
@@ -35,17 +42,57 @@
 
       function campoMinato() {
 
-        var computerNum = [];
+       computerNum = []; // var che posso usare ovunque
 
         for (var i = 0; computerNum.length < 16; i++ ) {
 
-          var numberGenerate = Math.floor(Math.random() * 100) + 1;
+          var numberGeneratePc = Math.floor(Math.random() * 100) + 1;
 
-          if (computerNum.indexOf(numberGenerate) == -1) {  // "indexOf == -1" è una funzione di js che verifica se all'interno dell'array è presente o meno un determinato valore/elemento, restituendo 0 se c'è oppure -1 se non c'è.
-            computerNum.push(numberGenerate);
+          if (computerNum.indexOf(numberGeneratePc) == -1) {  // "indexOf == -1" è una funzione di js che verifica se all'interno dell'array è presente o meno un determinato valore/elemento, restituendo 0 se c'è oppure -1 se non c'è.
+            computerNum.push(numberGeneratePc);
           }
         }
         console.log(computerNum);
+
+        var btn = document.getElementById('button');
+
+        btn.addEventListener('click', function(){
+
+         userNum = []; // var che posso usare ovunque
+
+          for (var i = 0; userNum.length < 5; i++) {
+
+            var numberGenerateUser = parseInt(prompt("dimmi dei numeri"));
+
+            if (userNum.indexOf(numberGenerateUser) == -1)  {
+              userNum.push(numberGenerateUser);
+            } else {
+              alert("numero già digitato, inserisci altro numero")
+            }
+
+            // adesso gli devo far comparare i numeri pc con quelli userNum
+            var compare = (computerNum.indexOf(userNum) == -1)
+
+            if (compare) {
+              console.log("hai perso");
+
+            }
+
+            // da revisionare il sopra
+
+
+
+
+
+          }
+
+          console.log(userNum);
+        });
+
+
+
+
+
 
 
       }
