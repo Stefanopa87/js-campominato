@@ -62,25 +62,24 @@
 
           for (var i = 0; userNum.length < 5; i++) {
 
-            var numberGenerateUser = parseInt(prompt("dimmi dei numeri"));
+            var numberGenerateUser = parseInt(prompt("dimmi dei numeri da 1 a 100"));
 
-            if (userNum.indexOf(numberGenerateUser) == -1)  {
+            if ((userNum.indexOf(numberGenerateUser) == -1)
+            && (numberGenerateUser >= 1)
+            && (numberGenerateUser <= 100)) {
               userNum.push(numberGenerateUser);
             } else {
-              alert("numero già digitato, inserisci altro numero")
+              document.getElementById('title').innerHTML = "<h1 style='color: yellow;'> numero già digitato o valore non valido </h1>";
+              break; // per far terminare la partita se è stato inserito lo stesso numero o se è > 100.
             }
 
-            // adesso gli devo far comparare i numeri pc con quelli userNum
-            var compare = (computerNum.indexOf(userNum) == -1)
+            // comparare pc con user
+            var compare = (computerNum.indexOf(numberGenerateUser) == -1)
 
-            if (compare) {
-              console.log("hai perso");
-
+            if (compare == false) {
+              document.getElementById('title').innerHTML = "<h1 style='color: purple;'> peccato, hai perso.. ricomincia.. </h1>";
+              break;
             }
-
-            // da revisionare il sopra
-
-
 
 
 
