@@ -14,6 +14,11 @@
       margin-top: 100px;
     }
 
+    h2{
+      text-align: center;
+      color: #fff;
+    }
+
     .button{
       text-align: center;
     }
@@ -22,6 +27,7 @@
   </head>
   <body>
     <h1 id="title">CAMPO MINATO</h1>
+    <h2 id="title-result"></h2>
     <div class="button">
       <button id="button">clicca per far partire il gioco</button>
     </div>
@@ -40,13 +46,30 @@
         // Al termine della partita il software deve comunicare il punteggio,
         // cioè il numero di volte che l’utente ha inserito un numero consentito.
 
-      function campoMinato() {
+      function campoMinato(level) {
 
        computerNum = []; // var che posso usare ovunque
 
         for (var i = 0; computerNum.length < 16; i++ ) {
 
-          var numberGeneratePc = Math.floor(Math.random() * 100) + 1;
+          difficulty = 0; // aggiunta selezione difficoltà..
+          if (level == 0) {
+            difficulty = 100;
+            var numberGeneratePc = Math.floor(Math.random() * difficulty) + 1;
+            document.getElementById('title').innerHTML = "<h1 style='color: white;'> Campo Minato tra 1 e 100.. </h1>";
+          } else if (level == 1) {
+            difficulty = 80;
+            var numberGeneratePc = Math.floor(Math.random() * difficulty) + 1;
+            document.getElementById('title').innerHTML = "<h1 style='color: white;'> Campo Minato tra 1 e 80.. </h1>";
+          } else if ( level == 2) {
+            difficulty = 50;
+            var numberGeneratePc = Math.floor(Math.random() * difficulty) + 1;
+            document.getElementById('title').innerHTML = "<h1 style='color: white;'> Campo Minato tra 1 e 50.. </h1>";
+          } else {
+            alert( "livello non valido");
+            break;
+          }
+
 
           if (computerNum.indexOf(numberGeneratePc) == -1) {  // "indexOf == -1" è una funzione di js che verifica se all'interno dell'array è presente o meno un determinato valore/elemento, restituendo 0 se c'è oppure -1 se non c'è.
             computerNum.push(numberGeneratePc);
@@ -60,17 +83,21 @@
 
          userNum = []; // var che posso usare ovunque
 
-          for (var i = 0; userNum.length < 5; i++) {
+          for (var i = 0; userNum.length < (difficulty - 16); i++) {
 
-            var numberGenerateUser = parseInt(prompt("dimmi dei numeri da 1 a 100"));
+            var numberGenerateUser = parseInt(prompt("dimmi dei numeri da 1 a " + difficulty));
+
+            var value = userNum.length;
 
             if ((userNum.indexOf(numberGenerateUser) == -1)
             && (numberGenerateUser >= 1)
-            && (numberGenerateUser <= 100)) {
+            && (numberGenerateUser <= difficulty)) {
               userNum.push(numberGenerateUser);
+              document.getElementById('title-result').innerHTML = "hai inserito " + value + " valori validi";
             } else {
               document.getElementById('title').innerHTML = "<h1 style='color: yellow;'> numero già digitato o valore non valido </h1>";
-              break; // per far terminare la partita se è stato inserito lo stesso numero o se è > 100.
+              document.getElementById('title-result').innerHTML = "hai inserito " + value + " valori validi e purtoppo anche un valore nullo: " + numberGenerateUser + " !!!";
+              break;
             }
 
             // comparare pc con user
@@ -78,26 +105,17 @@
 
             if (compare == false) {
               document.getElementById('title').innerHTML = "<h1 style='color: purple;'> peccato, hai perso.. ricomincia.. </h1>";
+              document.getElementById('title-result').innerHTML = "hai inserito " + value + " valori validi e purtoppo anche lo stesso numero del PC: " + numberGenerateUser + " !!!";
               break;
             }
-
-
-
           }
-
           console.log(userNum);
         });
-
-
-
-
-
-
-
       }
 
-      campoMinato();
+      var levelInput = prompt("che livello vuoi? scegli tra 0, 1 e 2");
 
+      campoMinato(levelInput);
 
 
 
